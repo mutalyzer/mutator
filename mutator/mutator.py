@@ -1,84 +1,59 @@
-# To be decided  (for the moment):
-# - Do we consider only exact locations? (yes)
-# - Do we discard locations for which start > end? (yes)
-# - Do we fail hard in case of deletions overlap? (yes)
-# - Do we assume the order important? (yes)
+# locations are
+#
+# Assumptions for which we do not check:
+# - only exact locations.
+# - start > end.
+# - no overlapping.
+# - sorted locations.
+# Other assumptions:
+# - there can be empty inserted lists.
+# Note that if any of the above is not met, the result will be bogus.
 
 
-def point_checks(point):
-    if not isinstance(point, dict):
-        raise ValueError
-    if point.get('type') is None:
-        raise ValueError
-    if point['type'] is not 'point':
-        raise ValueError
-    if point.get('position') is None:
-        raise ValueError
-
-
-def location_checks(location):
-    if not isinstance(location, dict):
-        raise ValueError
-    if location.get('type') is None:
-        raise ValueError
-    if location['type'] not in ['range', 'point']:
-        raise ValueError
-    if location['type'] is 'range':
-        if location.get('start') is None:
-            raise ValueError
-        point_checks(location['start'])
-        if location.get('end') is None:
-            raise ValueError
-        point_checks(location['end'])
-        if location['start']['position'] > \
-                location['end']['position']:
-            raise ValueError
-
-
-def operation_checks(operation):
+def get_start_end(location):
     """
-    Checking if an operation can be utilized in terms of schema.
-
-    Note: Maybe it should be replaced with the schema validation from the
-    normalizer, or a customized schema should be derived.
+    Get the start and the end of a location object. For point locations both
+    start and end equal the position value.
     """
-    if operation.get('type') is not 'deletion_insertion':
-        raise ValueError
-    if operation.get('location') is None:
-        raise ValueError
-    location_checks(operation['location'])
+    if location['type'] == 'range':
+        return location['start']['position'],\
+               location['end']['position']
+    elif location['type'] == 'point':
+        return location['position'],\
+               location['position']
 
 
-def operations_check(operations):
+def get_inserted_sequence(insertion, sequences):
     """
-    Some sanity checking.
+    Retrieves the actual sequence mentioned in the insertion.
     """
-    for operation in operations:
-        operation_checks(operation)
-
-
-def is_overlap(operations):
-    return False
-
-
-def get_start_end(operation):
-    if operation['location']['type'] is 'range':
-        return operation['location']['start']['point'],\
-               operation['location']['end']['point']
-    elif operation['location']['type'] is 'point':
-        return operation['location']['point'], operation['location']['point']
+    if insertion['source'] is 'description':
+        return insertion['sequence']
+    else:
+        return sequences[insertion['source']][slice(
+            *get_start_end(insertion['location']))]
 
 
 def mutate(sequences, operations):
+    """
+    Mutates the reference sequence according to the provided operations.
 
-    operations_check(operations)
-    if is_overlap(operations):
-        raise ValueError
+    :param sequences: sequences dictionary.
+    :param operations: operations list.
+    :return: the mutated `sequences['reference']` sequence.
+    """
+    reference = sequences['reference']
 
-    observed = sequences['reference']
-
+    parts = []
+    iterator = 0
     for operation in operations:
-        start, end = get_start_end(operation)
+        start, end = get_start_end(operation['location'])
+        parts.append(reference[iterator:start])
+        for insertion in operation['inserted']:
+            print(get_inserted_sequence(insertion, sequences))
+            parts.append(get_inserted_sequence(insertion, sequences))
+        iterator = end
 
+    observed = ''.join(parts)
 
     return observed
