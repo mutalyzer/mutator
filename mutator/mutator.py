@@ -1,13 +1,24 @@
-# locations are
-#
 # Assumptions for which we do not check:
+# - only 'deletion_insertion' operations.
 # - only exact locations.
 # - start > end.
 # - no overlapping.
 # - sorted locations.
+# Note that if any of the above is not met, the result will be bogus.
+#
 # Other assumptions:
 # - there can be empty inserted lists.
-# Note that if any of the above is not met, the result will be bogus.
+
+
+from Bio.Seq import Seq
+
+
+def get_inverted(sequence):
+    """
+    Reverse complement inversion using BioPython.
+    """
+    sequence = Seq(sequence)
+    return str(sequence.reverse_complement())
 
 
 def get_start_end(location):
@@ -16,43 +27,45 @@ def get_start_end(location):
     start and end equal the position value.
     """
     if location['type'] == 'range':
-        return location['start']['position'],\
-               location['end']['position']
+        return location['start']['position'], location['end']['position']
     elif location['type'] == 'point':
-        return location['position'],\
-               location['position']
+        return location['position'], location['position']
 
 
-def get_inserted_sequence(insertion, sequences):
+def get_inserted_sequence(inserted, sequences):
     """
     Retrieves the actual sequence mentioned in the insertion.
     """
-    if insertion['source'] is 'description':
-        return insertion['sequence']
+    if inserted['source'] is 'description':
+        sequence = inserted['sequence']
     else:
-        return sequences[insertion['source']][slice(
-            *get_start_end(insertion['location']))]
+        sequence = sequences[inserted['source']][slice(
+            *get_start_end(inserted['location']))]
+    if inserted.get('inverted'):
+        sequence = get_inverted(sequence)
+    return sequence
 
 
-def mutate(sequences, operations):
+def mutate(sequences, variants):
     """
     Mutates the reference sequence according to the provided operations.
 
     :param sequences: sequences dictionary.
-    :param operations: operations list.
+    :param variants: operations list.
     :return: the mutated `sequences['reference']` sequence.
     """
     reference = sequences['reference']
 
     parts = []
-    iterator = 0
-    for operation in operations:
-        start, end = get_start_end(operation['location'])
-        parts.append(reference[iterator:start])
-        for insertion in operation['inserted']:
-            print(get_inserted_sequence(insertion, sequences))
+    current_index = 0
+    for variant in variants:
+        start, end = get_start_end(variant['location'])
+        parts.append(reference[current_index:start])
+        for insertion in variant['inserted']:
             parts.append(get_inserted_sequence(insertion, sequences))
-        iterator = end
+        current_index = end
+
+    parts.append(reference[current_index:])
 
     observed = ''.join(parts)
 
