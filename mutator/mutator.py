@@ -3,7 +3,6 @@
 # - only exact locations.
 # - start > end.
 # - no overlapping.
-# - sorted locations.
 # Note that if any of the above is not met, the result will be bogus.
 #
 # Other assumptions:
@@ -55,6 +54,8 @@ def mutate(sequences, variants):
     :return: the mutated `sequences['reference']` sequence.
     """
     reference = sequences['reference']
+
+    variants = sorted(variants, key=lambda v: (get_start_end(v['location'])))
 
     parts = []
     current_index = 0
