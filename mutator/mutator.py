@@ -9,15 +9,14 @@
 # - there can be empty inserted lists.
 
 
-from Bio.Seq import Seq
+from .util import reverse_complement
 
 
 def get_inverted(sequence):
     """
-    Reverse complement inversion using BioPython.
+    Reverse complement inversion using code extracted from BioPython.
     """
-    sequence = Seq(sequence)
-    return str(sequence.reverse_complement())
+    return reverse_complement(sequence)
 
 
 def get_start_end(location):
