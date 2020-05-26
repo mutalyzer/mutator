@@ -54,6 +54,7 @@ def test_basic():
 
 REFERENCE = 'ACGTCGATTCGCTAGCTTCGGGGGATAGATAGAGATATAGAGAT'
 
+# The following descriptions use HGVS locations, while variants use internal.
 TESTS = [
     ('(empty)',
      {'reference': '',
@@ -64,6 +65,38 @@ TESTS = [
      {'reference': REFERENCE,
       'observed': REFERENCE},
      []),
+
+    ('0_1insT',  # In HGVS this does't seem possible.
+     {'reference': 'AAA',
+      'observed': 'TAAAA'},
+     [{'type': 'deletion_insertion',
+       'location': get_location(0, 0),
+       'inserted': [{'source': 'description',
+                     'sequence': 'TA'}]}]),
+
+    ('3_4insT',  # Where an insertion can firstly take place in HGVS?
+     {'reference': 'AAA',
+      'observed': 'AAATA'},
+     [{'type': 'deletion_insertion',
+       'location': get_location(3, 3),
+       'inserted': [{'source': 'description',
+                     'sequence': 'TA'}]}]),
+
+    ('1A>T',
+     {'reference': REFERENCE,
+      'observed': 'TCGTCGATTCGCTAGCTTCGGGGGATAGATAGAGATATAGAGAT'},
+     [{'type': 'deletion_insertion',
+       'location': get_location(0, 1),
+       'inserted': [{'source': 'description',
+                     'sequence': 'T'}]}]),
+
+    ('44_45insT',
+     {'reference': REFERENCE,
+      'observed': 'TACGTCGATTCGCTAGCTTCGGGGGATAGATAGAGATATAGAGAT'},
+     [{'type': 'deletion_insertion',
+       'location': get_location(0, 0),
+       'inserted': [{'source': 'description',
+                     'sequence': 'T'}]}]),
 
     ('7A>G',
      {'reference': REFERENCE,
