@@ -24,22 +24,23 @@ def get_start_end(location):
     Get the start and the end of a location object. For point locations both
     start and end equal the position value.
     """
-    if location['type'] == 'range':
-        return location['start']['position'], location['end']['position']
-    elif location['type'] == 'point':
-        return location['position'], location['position']
+    if location["type"] == "range":
+        return location["start"]["position"], location["end"]["position"]
+    elif location["type"] == "point":
+        return location["position"], location["position"]
 
 
 def get_inserted_sequence(inserted, sequences):
     """
     Retrieves the actual sequence mentioned in the insertion.
     """
-    if inserted['source'] == 'description':
-        sequence = inserted['sequence']
+    if inserted["source"] == "description":
+        sequence = inserted["sequence"]
     else:
-        sequence = sequences[inserted['source']][slice(
-            *get_start_end(inserted['location']))]
-    if inserted.get('inverted'):
+        sequence = sequences[inserted["source"]][
+            slice(*get_start_end(inserted["location"]))
+        ]
+    if inserted.get("inverted"):
         sequence = get_inverted(sequence)
     return sequence
 
@@ -52,19 +53,19 @@ def mutate(sequences, variants):
     :param variants: operations list.
     :return: the mutated `sequences['reference']` sequence.
     """
-    reference = sequences['reference']
+    reference = sequences["reference"]
 
-    variants = sorted(variants, key=lambda v: (get_start_end(v['location'])))
+    variants = sorted(variants, key=lambda v: (get_start_end(v["location"])))
 
     parts = []
     current_index = 0
     for variant in variants:
-        start, end = get_start_end(variant['location'])
+        start, end = get_start_end(variant["location"])
         parts.append(reference[current_index:start])
-        for insertion in variant['inserted']:
+        for insertion in variant["inserted"]:
             parts.append(get_inserted_sequence(insertion, sequences))
         current_index = end
 
     parts.append(reference[current_index:])
 
-    return ''.join(parts)
+    return "".join(parts)

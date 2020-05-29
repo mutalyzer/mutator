@@ -6,22 +6,22 @@
 
 
 ambiguous_dna_complement = {
-    'A': 'T',
-    'C': 'G',
-    'G': 'C',
-    'T': 'A',
-    'M': 'K',
-    'R': 'Y',
-    'W': 'W',
-    'S': 'S',
-    'Y': 'R',
-    'K': 'M',
-    'V': 'B',
-    'H': 'D',
-    'D': 'H',
-    'B': 'V',
-    'X': 'X',
-    'N': 'N',
+    "A": "T",
+    "C": "G",
+    "G": "C",
+    "T": "A",
+    "M": "K",
+    "R": "Y",
+    "W": "W",
+    "S": "S",
+    "Y": "R",
+    "K": "M",
+    "V": "B",
+    "H": "D",
+    "D": "H",
+    "B": "V",
+    "X": "X",
+    "N": "N",
 }
 
 
@@ -40,8 +40,8 @@ def _maketrans(complement_mapping):
 
     For internal use only.
     """
-    before = ''.join(complement_mapping.keys())
-    after = ''.join(complement_mapping.values())
+    before = "".join(complement_mapping.keys())
+    after = "".join(complement_mapping.values())
     before += before.lower()
     after += after.lower()
     return str.maketrans(before, after)
