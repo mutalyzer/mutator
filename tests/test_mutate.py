@@ -1,5 +1,6 @@
 import pytest
-from mutator import mutate
+
+from mutalyzer_mutator import mutate
 
 
 def get_location(start, end=None):
