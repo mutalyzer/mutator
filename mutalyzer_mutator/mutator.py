@@ -34,7 +34,7 @@ def get_inserted_sequence(inserted, sequences):
     """
     Retrieves the actual sequence mentioned in the insertion.
     """
-    if inserted['source'] is 'description':
+    if inserted['source'] == 'description':
         sequence = inserted['sequence']
     else:
         sequence = sequences[inserted['source']][slice(
@@ -67,6 +67,4 @@ def mutate(sequences, variants):
 
     parts.append(reference[current_index:])
 
-    observed = ''.join(parts)
-
-    return observed
+    return ''.join(parts)
