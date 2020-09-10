@@ -36,10 +36,16 @@ def get_inserted_sequence(inserted, sequences):
     """
     if inserted["source"] == "description":
         sequence = inserted["sequence"]
-    else:
+    elif inserted["source"] == "reference":
         sequence = sequences[inserted["source"]][
             slice(*get_start_end(inserted["location"]))
         ]
+    elif isinstance(inserted["source"], dict) and inserted["source"].get("id"):
+        sequence = sequences[inserted["source"]["id"]][
+            slice(*get_start_end(inserted["location"]))
+        ]
+    else:
+        raise Exception("Inserted source not supported.")
     if inserted.get("inverted"):
         sequence = get_inverted(sequence)
     return sequence
