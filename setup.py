@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="mutalyzer-mutator",
-    version="0.0.1",
+    version="0.0.2",
     packages=["mutalyzer_mutator"],
     python_requires=">=3.0",
     description="Mutalyzer sequence mutator.",
