@@ -48,6 +48,11 @@ def get_inserted_sequence(inserted, sequences):
         raise Exception("Inserted source not supported.")
     if inserted.get("inverted"):
         sequence = get_inverted(sequence)
+
+    # TODO: can this be combined with inverted?
+    if inserted.get("repeat_number") and inserted["repeat_number"].get("value") is not None:
+        sequence = sequence * inserted.get("repeat_number")["value"]
+
     return sequence
 
 
