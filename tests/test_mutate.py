@@ -341,9 +341,9 @@ TESTS = [
             },
             {
                 "type": "deletion_insertion",
-                "location": get_location(6,7),
+                "location": get_location(6, 7),
                 "inserted": [],
-            }
+            },
         ],
     ),
     (

@@ -74,7 +74,6 @@ def mutate(sequences, variants):
     parts = []
     current_index = 0
     for variant in variants:
-        print(variant)
         start, end = get_start_end(variant["location"])
         parts.append(reference[current_index:start])
         for insertion in variant["inserted"]:
