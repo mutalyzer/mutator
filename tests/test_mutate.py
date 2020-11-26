@@ -291,6 +291,80 @@ TESTS = [
             },
         ],
     ),
+    (
+        "[1_2del;5_5insAT]",
+        {"reference": "AAAATTTT", "observed": "AAATATTTT"},
+        [
+            {
+                "type": "deletion_insertion",
+                "location": get_location(1, 2),
+                "inserted": [],
+            },
+            {
+                "type": "deletion_insertion",
+                "location": get_location(5, 5),
+                "inserted": [{"source": "description", "sequence": "AT"}],
+            },
+        ],
+    ),
+    (
+        "[0_4delinsA[6]]",
+        {"reference": "AAAATTTT", "observed": "AAAAAATTTT"},
+        [
+            {
+                "type": "deletion_insertion",
+                "location": get_location(0, 4),
+                "inserted": [
+                    {
+                        "source": "description",
+                        "sequence": "A",
+                        "repeat_number": {"value": 6},
+                    }
+                ],
+            }
+        ],
+    ),
+    (
+        "[0_4delins[A[6];del6_7]",
+        {"reference": "AAAATTTT", "observed": "AAAAAATTT"},
+        [
+            {
+                "type": "deletion_insertion",
+                "location": get_location(0, 4),
+                "inserted": [
+                    {
+                        "source": "description",
+                        "sequence": "A",
+                        "repeat_number": {"value": 6},
+                    }
+                ],
+            },
+            {
+                "type": "deletion_insertion",
+                "location": get_location(6,7),
+                "inserted": [],
+            }
+        ],
+    ),
+    (
+        "[3_6delins3_6[6]inv]",
+        {"reference": "AAAATTTT", "observed": "AAAAATAATAATAATAATAATTT"},
+        [
+            {
+                "type": "deletion_insertion",
+                "source": "reference",
+                "location": get_location(3, 6),
+                "inserted": [
+                    {
+                        "source": "reference",
+                        "location": get_location(3, 6),
+                        "repeat_number": {"value": 6},
+                        "inverted": True,
+                    }
+                ],
+            }
+        ],
+    ),
 ]
 
 
