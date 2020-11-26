@@ -46,12 +46,15 @@ def get_inserted_sequence(inserted, sequences):
         ]
     else:
         raise Exception("Inserted source not supported.")
+
+    if (
+        inserted.get("repeat_number")
+        and inserted["repeat_number"].get("value") is not None
+    ):
+        sequence = sequence * inserted.get("repeat_number")["value"]
+
     if inserted.get("inverted"):
         sequence = get_inverted(sequence)
-
-    # TODO: can this be combined with inverted?
-    if inserted.get("repeat_number") and inserted["repeat_number"].get("value") is not None:
-        sequence = sequence * inserted.get("repeat_number")["value"]
 
     return sequence
 
@@ -71,6 +74,7 @@ def mutate(sequences, variants):
     parts = []
     current_index = 0
     for variant in variants:
+        print(variant)
         start, end = get_start_end(variant["location"])
         parts.append(reference[current_index:start])
         for insertion in variant["inserted"]:
