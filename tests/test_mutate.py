@@ -1,11 +1,11 @@
 import pytest
 
-from mutalyzer_mutator import mutate
+from mutalyzer_mutator.mutator import UnknownInsertedSource, mutate
 
 
-def get_location(start, end=None):
+def _location(start, end=None):
     if end:
-        return {"type": "range", "start": get_location(start), "end": get_location(end)}
+        return {"type": "range", "start": _location(start), "end": _location(end)}
     else:
         return {"type": "point", "position": start}
 
@@ -17,39 +17,37 @@ def test_basic():
         {
             "type": "deletion_insertion",
             "source": "reference",
-            "location": get_location(3, 4),
+            "location": _location(3, 4),
             "inserted": [{"source": "description", "sequence": "bb"}],
         },
         {
             "type": "deletion_insertion",
             "source": "reference",
-            "location": get_location(4, 4),
-            "inserted": [
-                {"source": {"id": "other_one"}, "location": get_location(0, 10)}
-            ],
+            "location": _location(4, 4),
+            "inserted": [{"source": {"id": "other_one"}, "location": _location(0, 10)}],
         },
         {
             "type": "deletion_insertion",
             "source": "reference",
-            "location": get_location(6, 7),
+            "location": _location(6, 7),
             "inserted": [],
         },
         {
             "type": "deletion_insertion",
             "source": "reference",
-            "location": get_location(7, 7),
+            "location": _location(7, 7),
             "inserted": [{"source": "description", "sequence": "ddd"}],
         },
         {
             "type": "deletion_insertion",
             "source": "reference",
-            "location": get_location(8, 9),
+            "location": _location(8, 9),
             "inserted": [{"source": "description", "sequence": "ggg"}],
         },
         {
             "type": "deletion_insertion",
             "source": "reference",
-            "location": get_location(9, 10),
+            "location": _location(9, 10),
             "inserted": [{"source": "description", "sequence": "hhh"}],
         },
     ]
@@ -69,7 +67,7 @@ TESTS = [
         [
             {
                 "type": "deletion_insertion",
-                "location": get_location(0, 0),
+                "location": _location(0, 0),
                 "inserted": [{"source": "description", "sequence": "TA"}],
             }
         ],
@@ -80,7 +78,7 @@ TESTS = [
         [
             {
                 "type": "deletion_insertion",
-                "location": get_location(3, 3),
+                "location": _location(3, 3),
                 "inserted": [{"source": "description", "sequence": "TA"}],
             }
         ],
@@ -94,7 +92,7 @@ TESTS = [
         [
             {
                 "type": "deletion_insertion",
-                "location": get_location(0, 1),
+                "location": _location(0, 1),
                 "inserted": [{"source": "description", "sequence": "T"}],
             }
         ],
@@ -108,7 +106,7 @@ TESTS = [
         [
             {
                 "type": "deletion_insertion",
-                "location": get_location(0, 0),
+                "location": _location(0, 0),
                 "inserted": [{"source": "description", "sequence": "T"}],
             }
         ],
@@ -122,9 +120,9 @@ TESTS = [
         [
             {
                 "type": "deletion_insertion",
-                "location": get_location(6, 7),
+                "location": _location(6, 7),
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(6, 7)}
+                    {"source": {"id": "observed"}, "location": _location(6, 7)}
                 ],
             }
         ],
@@ -139,9 +137,9 @@ TESTS = [
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(6, 7),
+                "location": _location(6, 7),
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(6, 6)}
+                    {"source": {"id": "observed"}, "location": _location(6, 6)}
                 ],
             }
         ],
@@ -156,10 +154,10 @@ TESTS = [
             {
                 "type": "deletion_insertion",
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(6, 6)}
+                    {"source": {"id": "observed"}, "location": _location(6, 6)}
                 ],
                 "source": "reference",
-                "location": get_location(6, 8),
+                "location": _location(6, 8),
             }
         ],
     ),
@@ -173,9 +171,9 @@ TESTS = [
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(6, 6),
+                "location": _location(6, 6),
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(6, 7)}
+                    {"source": {"id": "observed"}, "location": _location(6, 7)}
                 ],
             }
         ],
@@ -190,25 +188,25 @@ TESTS = [
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(25, 26),
+                "location": _location(25, 26),
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(25, 26)}
+                    {"source": {"id": "observed"}, "location": _location(25, 26)}
                 ],
             },
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(29, 30),
+                "location": _location(29, 30),
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(29, 30)}
+                    {"source": {"id": "observed"}, "location": _location(29, 30)}
                 ],
             },
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(34, 35),
+                "location": _location(34, 35),
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(34, 35)}
+                    {"source": {"id": "observed"}, "location": _location(34, 35)}
                 ],
             },
         ],
@@ -223,25 +221,25 @@ TESTS = [
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(29, 30),
+                "location": _location(29, 30),
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(29, 30)}
+                    {"source": {"id": "observed"}, "location": _location(29, 30)}
                 ],
             },
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(34, 35),
+                "location": _location(34, 35),
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(34, 35)}
+                    {"source": {"id": "observed"}, "location": _location(34, 35)}
                 ],
             },
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(25, 26),
+                "location": _location(25, 26),
                 "inserted": [
-                    {"source": {"id": "observed"}, "location": get_location(25, 26)}
+                    {"source": {"id": "observed"}, "location": _location(25, 26)}
                 ],
             },
         ],
@@ -256,11 +254,11 @@ TESTS = [
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(37, 37),
+                "location": _location(37, 37),
                 "inserted": [
                     {
                         "source": "reference",
-                        "location": get_location(2, 26),
+                        "location": _location(2, 26),
                         "inverted": True,
                     }
                 ],
@@ -274,19 +272,19 @@ TESTS = [
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(3, 3),
+                "location": _location(3, 3),
                 "inserted": [{"source": "description", "sequence": "T"}],
             },
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(4, 4),
+                "location": _location(4, 4),
                 "inserted": [{"source": "description", "sequence": "CC"}],
             },
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(2, 2),
+                "location": _location(2, 2),
                 "inserted": [{"source": "description", "sequence": "G"}],
             },
         ],
@@ -297,12 +295,12 @@ TESTS = [
         [
             {
                 "type": "deletion_insertion",
-                "location": get_location(1, 2),
+                "location": _location(1, 2),
                 "inserted": [],
             },
             {
                 "type": "deletion_insertion",
-                "location": get_location(5, 5),
+                "location": _location(5, 5),
                 "inserted": [{"source": "description", "sequence": "AT"}],
             },
         ],
@@ -313,7 +311,7 @@ TESTS = [
         [
             {
                 "type": "deletion_insertion",
-                "location": get_location(0, 4),
+                "location": _location(0, 4),
                 "inserted": [
                     {
                         "source": "description",
@@ -330,7 +328,7 @@ TESTS = [
         [
             {
                 "type": "deletion_insertion",
-                "location": get_location(0, 4),
+                "location": _location(0, 4),
                 "inserted": [
                     {
                         "source": "description",
@@ -341,7 +339,7 @@ TESTS = [
             },
             {
                 "type": "deletion_insertion",
-                "location": get_location(6, 7),
+                "location": _location(6, 7),
                 "inserted": [],
             },
         ],
@@ -353,11 +351,11 @@ TESTS = [
             {
                 "type": "deletion_insertion",
                 "source": "reference",
-                "location": get_location(3, 6),
+                "location": _location(3, 6),
                 "inserted": [
                     {
                         "source": "reference",
-                        "location": get_location(3, 6),
+                        "location": _location(3, 6),
                         "repeat_number": {"value": 6},
                         "inverted": True,
                     }
@@ -371,3 +369,23 @@ TESTS = [
 @pytest.mark.parametrize("_, sequences, variants", TESTS)
 def test_variants_de_extracts(_, sequences, variants):
     assert sequences["observed"] == mutate(sequences, variants)
+
+
+@pytest.mark.parametrize(
+    "sequences, variants",
+    [
+        (
+            {"reference": "AAA"},
+            [
+                {
+                    "type": "deletion_insertion",
+                    "location": _location(3, 3),
+                    "inserted": [{"source": "not_supported", "sequence": "TA"}],
+                }
+            ],
+        ),
+    ],
+)
+def test_unknown_inserted_source(sequences, variants):
+    with pytest.raises(UnknownInsertedSource):
+        mutate(sequences, variants)

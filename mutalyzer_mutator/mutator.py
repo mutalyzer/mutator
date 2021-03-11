@@ -12,6 +12,10 @@
 from .util import reverse_complement
 
 
+class UnknownInsertedSource(Exception):
+    pass
+
+
 def get_inverted(sequence):
     """
     Reverse complement inversion using code extracted from BioPython.
@@ -45,7 +49,7 @@ def get_inserted_sequence(inserted, sequences):
             slice(*get_start_end(inserted["location"]))
         ]
     else:
-        raise Exception("Inserted source not supported.")
+        raise UnknownInsertedSource("Inserted source not supported.")
 
     if (
         inserted.get("repeat_number")
