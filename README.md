@@ -15,6 +15,4 @@
 This package provides an interface to mutate a DNA reference sequence
 according to a list of variants.
 
-Please see ReadTheDocs_ for the latest documentation.
-
-.. _ReadTheDocs: https://mutalyzer-mutator.readthedocs.io
+Please see [ReadTheDocs](https://mutalyzer-mutator.readthedocs.io) for the latest documentation.
