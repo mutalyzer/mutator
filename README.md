@@ -1,53 +1,20 @@
-This library provides an interface to mutate a DNA reference sequence
+# Mutalyzer Mutator
+
+![GitHub last commit](https://img.shields.io/github/last-commit/mutalyzer/mutator)
+![Read the Docs](https://img.shields.io/readthedocs/mutalyzer-mutator)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mutalyzer/mutator)
+![GitHub Release Date](https://img.shields.io/github/release-date/mutalyzer/mutator)
+![PyPI](https://img.shields.io/pypi/v/mutalyzer_hgvs_parser)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/mutalyzer/mutator)
+![GitHub language count](https://img.shields.io/github/languages/count/mutalyzer/mutator)
+![GitHub top language](https://img.shields.io/github/languages/top/mutalyzer/mutator)
+![GitHub](https://img.shields.io/github/license/mutalyzer/mutator)
+
+---
+
+This package provides an interface to mutate a DNA reference sequence
 according to a list of variants.
 
-# Installation
+Please see ReadTheDocs_ for the latest documentation.
 
-The software is distributed via PyPI. It can be installed with `pip`:
-
-```sh
-pip install mutalyzer-mutator
-```
-
-## From source
-
-To install the latest development version, use the following commands:
-
-```sh
-git clone https://github.com/mutalyzer/mutator.git
-cd mutator
-pip install .
-```
-
-# Usage
-
-```python
-from mutalyzer_mutator import mutate
-
-sequences = {"reference": "AAGG", "other": "AATTAA"}
-
-variants = [
-    {
-        "type": "deletion_insertion",
-        "source": "reference",
-        "location": {
-            "type": "range",
-            "start": {"type": "point", "position": 2},
-            "end": {"type": "point", "position": 2},
-        },
-        "inserted": [
-            {"sequence": "CC", "source": "description"},
-            {
-                "source": "other",
-                "location": {
-                    "type": "range",
-                    "start": {"type": "point", "position": 2},
-                    "end": {"type": "point", "position": 4},
-                },
-            },
-        ],
-    }
-]
-
-observed = mutate(sequences, variants)  # observed = 'AACCTTGG'
-```
+.. _ReadTheDocs: https://mutalyzer-mutator.readthedocs.io

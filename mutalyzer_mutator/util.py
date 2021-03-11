@@ -1,9 +1,14 @@
-# The following code is adapted from biopython 1.77:
-# - https://github.com/biopython/biopython/blob/biopython-177/Bio/Seq.py
-# - https://github.com/biopython/biopython/blob/biopython-177/Bio/Data/IUPACData.py
-# Notes:
-# - The alphabet check was removed - no errors are raised.
+"""
+Various util functions.
 
+The following code is adapted from biopython 1.77:
+  - https://github.com/biopython/biopython/blob/biopython-177/Bio/Seq.py
+  - https://github.com/biopython/biopython/blob/biopython-177/Bio/Data/IUPACData.py
+
+Notes:
+  - The alphabet check was removed.
+  - No previous custom errors are raised any longer.
+"""
 
 ambiguous_dna_complement = {
     "A": "T",
@@ -49,19 +54,25 @@ def _maketrans(complement_mapping):
 
 def complement(sequence):
     """
-    Return the complement sequence by creating a new Seq object.
+    Complement the ``sequence``.
+
     >>> sequence = 'CCCCCGATAG'
     >>> complement(sequence)
     'GGGGGCTATC'
 
-    You can of course used mixed case sequences,
+    You can of course use mixed case sequences,
 
     >>> sequence = 'CCCCCgatA-GD'
     >>> complement(sequence)
     'GGGGGctaT-CH'
 
-    Note in the above example, ambiguous character D denotes
-    G, A or T so its complement is H (for C, T or A).
+    Note that in the above example, the ambiguous character ``D`` denotes
+    ``G``, ``A`` or ``T`` so its complement is ``H`` (for ``C``, ``T`` or
+    ``A``).
+
+    :arg str sequence: Input sequence.
+    :returns: Complemented sequence.
+    :rtype: str
     """
     translation_table = _maketrans(ambiguous_dna_complement)
     return sequence.translate(translation_table)
@@ -69,20 +80,23 @@ def complement(sequence):
 
 def reverse_complement(sequence):
     """
-    Return the reverse complement sequence.
+    Return complement the ``sequence``.
 
     >>> sequence = 'CCCCCGATAGNR'
     >>> reverse_complement(sequence)
     'YNCTATCGGGGG'
 
-    Note in the above example, since R = G or A, its complement
-    is Y (which denotes C or T).
+    Note that in the above example, since ``R`` = ``G`` or ``A``,
+    its complement is ``Y`` (which denotes ``C`` or ``T``).
 
     You can of course used mixed case sequences,
 
     >>> sequence = 'CCCCCgatA-G'
     >>> reverse_complement(sequence)
     'C-TatcGGGGG'
+
+    :arg str sequence: Input sequence.
+    :returns: Reverse complemented sequence.
+    :rtype: str
     """
-    # Use -1 stride/step to reverse the complement
     return complement(sequence)[::-1]
