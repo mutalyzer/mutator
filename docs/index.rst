@@ -31,5 +31,5 @@ Mutate a sequence according to a list of variant models.
    :caption: Contents:
 
    install
-   usage
+   library
    api
