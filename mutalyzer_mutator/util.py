@@ -10,11 +10,13 @@ Notes:
   - No previous custom errors are raised any longer.
 """
 
-ambiguous_dna_complement = {
+ambiguous_complement = {
     "A": "T",
+    "a": "u",
     "C": "G",
     "G": "C",
     "T": "A",
+    "u": "a",
     "M": "K",
     "R": "Y",
     "W": "W",
@@ -35,7 +37,7 @@ def _maketrans(complement_mapping):
     Make a python string translation table (PRIVATE).
 
     Arguments:
-     - complement_mapping - a dictionary such as ambiguous_dna_complement
+     - complement_mapping - a dictionary such as ambiguous_complement
        and ambiguous_rna_complement from Data.IUPACData.
 
     Returns a translation table (a string of length 256) for use with the
@@ -60,11 +62,17 @@ def complement(sequence):
     >>> complement(sequence)
     'GGGGGCTATC'
 
-    You can of course use mixed case sequences,
+    You can use mix DNA with RNA sequences.
+
+    >>> sequence = 'CCCCCaTuAGD'
+    >>> complement(sequence)
+    'GGGGGuAaTCH'
+
+    Also, you can use mixed case sequences.
 
     >>> sequence = 'CCCCCgatA-GD'
     >>> complement(sequence)
-    'GGGGGctaT-CH'
+    'GGGGGcuaT-CH'
 
     Note that in the above example, the ambiguous character ``D`` denotes
     ``G``, ``A`` or ``T`` so its complement is ``H`` (for ``C``, ``T`` or
@@ -74,13 +82,13 @@ def complement(sequence):
     :returns: Complemented sequence.
     :rtype: str
     """
-    translation_table = _maketrans(ambiguous_dna_complement)
+    translation_table = _maketrans(ambiguous_complement)
     return sequence.translate(translation_table)
 
 
 def reverse_complement(sequence):
     """
-    Return complement the ``sequence``.
+    Reverse complement the ``sequence``.
 
     >>> sequence = 'CCCCCGATAGNR'
     >>> reverse_complement(sequence)
@@ -89,11 +97,17 @@ def reverse_complement(sequence):
     Note that in the above example, since ``R`` = ``G`` or ``A``,
     its complement is ``Y`` (which denotes ``C`` or ``T``).
 
+    You can use mix DNA with RNA sequences.
+
+    >>> sequence = 'CCCCCaTuAGD'
+    >>> reverse_complement(sequence)
+    'HCTaAuGGGGG'
+
     You can of course used mixed case sequences,
 
     >>> sequence = 'CCCCCgatA-G'
     >>> reverse_complement(sequence)
-    'C-TatcGGGGG'
+    'C-TaucGGGGG'
 
     :arg str sequence: Input sequence.
     :returns: Reverse complemented sequence.

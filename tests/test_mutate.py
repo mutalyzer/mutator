@@ -363,6 +363,25 @@ TESTS = [
             }
         ],
     ),
+    (
+        "[3_6delins3_6[6]inv]",
+        {"reference": "AAaauuTT", "observed": "AAaaauaauaauaauaauaauTT"},
+        [
+            {
+                "type": "deletion_insertion",
+                "source": "reference",
+                "location": _location(3, 6),
+                "inserted": [
+                    {
+                        "source": "reference",
+                        "location": _location(3, 6),
+                        "repeat_number": {"value": 6},
+                        "inverted": True,
+                    }
+                ],
+            }
+        ],
+    ),
 ]
 
 
