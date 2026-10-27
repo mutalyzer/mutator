@@ -1,0 +1,42 @@
+[build-system]
+requires = ['setuptools>=61']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'mutalyzer_mutator'
+description = 'Mutalyzer sequence mutator.'
+version = '0.2.1'
+
+authors = [
+    {name = 'Mihai Lefter', email = 'M.Lefter@lumc.nl'}]
+readme = 'README.md'
+urls = {Homepage = 'https://github.com/mutalyzer/mutator'}
+keywords = ['Mutalyzer', 'mutate', 'description', 'sequence', 'dna', 'variant']
+license = 'MIT'
+classifiers = [
+    'Intended Audience :: Developers',
+    'Intended Audience :: Science/Research',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Topic :: Scientific/Engineering/Bioinformatics']
+
+requires-python = '>=3.8'
+
+[tool.setuptools.packages.find]
+include = ["mutalyzer_mutator*"]
+
+[project.optional-dependencies]
+test = [
+	'pytest==6.2.4']
+dev = [
+	'build>=1.6.1',
+	'flake8>=6.1',
+	'pytest==6.2.4',
+    'pytest-cov>=2.10.0',
+	'twine>=7.0.0']
+docs = [
+	'sphinx>=4']
+
+[tool.coverage.run]
+source = ['mutalyzer_mutator']
