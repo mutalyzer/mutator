@@ -1,7 +1,3 @@
-from subprocess import call
-
-call('pip install ..', shell=True)
-
 from mutalyzer_mutator import author, copyright, project, release
 
 
