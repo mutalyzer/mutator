@@ -1,5 +1,5 @@
 [build-system]
-requires = ['setuptools>=61']
+requires = ['setuptools>=77']
 build-backend = 'setuptools.build_meta'
 
 [project]
@@ -8,7 +8,7 @@ description = 'Mutalyzer sequence mutator.'
 version = '0.2.1'
 
 authors = [
-    {name = 'Mihai Lefter', email = 'M.Lefter@lumc.nl'}]
+    {name = 'LUMC, Mihai Lefter', email = 'M.Lefter@lumc.nl'}]
 readme = 'README.md'
 urls = {Homepage = 'https://github.com/mutalyzer/mutator'}
 keywords = ['Mutalyzer', 'mutate', 'description', 'sequence', 'dna', 'variant']
@@ -19,9 +19,9 @@ classifiers = [
     'Operating System :: OS Independent',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
-    'Topic :: Scientific/Engineering/Bioinformatics']
+    'Topic :: Scientific/Engineering :: Bio-Informatics']
 
-requires-python = '>=3.8'
+requires-python = '>=3.9'
 
 [tool.setuptools.packages.find]
 include = ["mutalyzer_mutator*"]
@@ -30,16 +30,27 @@ include = ["mutalyzer_mutator*"]
 test = [
     'pytest>=7.0']
 dev = [
-	'build>=1.6.1',
-	'flake8>=6.1',
     'pytest>=7.0',
     'pytest-cov>=2.10.0',
-	'twine>=7.0.0']
+    'ruff>=0.17.0']
+release = [
+    'build>=1.6.1',
+    'twine>=7.0.0']
 docs = [
     'sphinx>=4',
     'sphinx_rtd_theme>=3.1.0',
     'sphinx-autodoc-typehints'
 ]
+
+[tool.ruff]
+line-length = 89
+
+[tool.ruff.lint]
+select = ['C90', 'E', 'F', 'I', 'W']
+ignore = ['E501', 'F401', 'F403']
+
+[tool.ruff.lint.mccabe]
+max-complexity = 18
 
 [tool.coverage.run]
 source = ['mutalyzer_mutator']

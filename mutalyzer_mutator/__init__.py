@@ -1,4 +1,4 @@
-from importlib.metadata import metadata, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, metadata
 from re import split
 
 from .mutator import mutate
@@ -22,7 +22,7 @@ _year = '2019-2026'
 
 project = _extract('Name')
 release = _extract('Version')
-author = _extract('Author-email', r' <|>', 0)
+author = _extract('Author-email', r'"', 1)
 description = _extract('Summary')
 copyright = f'{_year} by {author} <{_email}>'
 info = f'''{project} version {release}
