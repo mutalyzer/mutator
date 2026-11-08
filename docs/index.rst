@@ -20,7 +20,7 @@ Mutalyzer Mutator
 .. image:: https://img.shields.io/github/languages/top/mutalyzer/mutator.svg
    :target: https://github.com/mutalyzer/mutator
 .. image:: https://img.shields.io/github/license/mutalyzer/mutator.svg
-   :target: https://raw.githubusercontent.com/mutalyzer/mutator/master/LICENSE.md
+   :target: https://raw.githubusercontent.com/mutalyzer/mutator/master/LICENSE
 
 ----
 
