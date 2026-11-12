@@ -1,15 +1,6 @@
-from subprocess import call
-
-call('pip install ..', shell=True)
-
-from mutalyzer_mutator import _get_metadata
-
-
-author = _get_metadata('Author')
-copyright = _get_metadata('Author')
-project = _get_metadata('Name')
-release = _get_metadata('Version')
+from mutalyzer_mutator import author, copyright, project, release
 
 autoclass_content = 'both'
-extensions = ['sphinx.ext.autodoc']
+extensions = ['sphinx.ext.autodoc', 'sphinx_autodoc_typehints']
 master_doc = 'index'
+html_theme = 'sphinx_rtd_theme'

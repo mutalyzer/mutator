@@ -3,8 +3,8 @@ Mutalyzer Mutator
 
 .. image:: https://img.shields.io/github/last-commit/mutalyzer/mutator.svg
    :target: https://github.com/mutalyzer/mutator/graphs/commit-activity
-.. image:: https://github.com/mutalyzer/mutator/actions/workflows/ci.yml/badge.svg
-   :target: https://github.com/mutalyzer/mutator/actions/workflows/ci.yml
+.. image:: https://github.com/mutalyzer/mutator/actions/workflows/test.yml/badge.svg
+   :target: https://github.com/mutalyzer/mutator/actions/workflows/test.yml
 .. image:: https://readthedocs.org/projects/mutalyzer-mutator/badge/?version=latest
    :target: https://mutalyzer-mutator.readthedocs.io/en/latest
 .. image:: https://img.shields.io/github/release-date/mutalyzer/mutator.svg
@@ -20,7 +20,7 @@ Mutalyzer Mutator
 .. image:: https://img.shields.io/github/languages/top/mutalyzer/mutator.svg
    :target: https://github.com/mutalyzer/mutator
 .. image:: https://img.shields.io/github/license/mutalyzer/mutator.svg
-   :target: https://raw.githubusercontent.com/mutalyzer/mutator/master/LICENSE.md
+   :target: https://raw.githubusercontent.com/mutalyzer/mutator/master/LICENSE
 
 ----
 
@@ -33,3 +33,4 @@ Mutate a sequence according to a list of variant models.
    install
    library
    api
+   credits

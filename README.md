@@ -1,7 +1,7 @@
 # Mutalyzer Mutator
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/mutalyzer/mutator)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mutalyzer/mutator/Python%20package%20CI)
+![Test](https://github.com/mutalyzer/mutator/actions/workflows/test.yml/badge.svg)
 ![Read the Docs](https://img.shields.io/readthedocs/mutalyzer-mutator)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/mutalyzer/mutator)
 ![GitHub Release Date](https://img.shields.io/github/release-date/mutalyzer/mutator)
