@@ -5,7 +5,7 @@ build-backend = 'setuptools.build_meta'
 [project]
 name = 'mutalyzer_mutator'
 description = 'Mutalyzer sequence mutator.'
-version = '0.2.1'
+version = '0.2.2'
 
 authors = [
     {name = 'LUMC, Mihai Lefter', email = 'M.Lefter@lumc.nl'}]
